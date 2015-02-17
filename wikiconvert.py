@@ -94,6 +94,9 @@ def convert_file(proj_id, src_path, dst_dir):
         return hash
     text = re.compile(r'\[((?:[A-Z][a-z]+)+)(?:\s+(.*?))?\]', re.S).sub(sub_wikilink, text)
 
+    # Wiki link escapes
+    text = re.compile(r'(\s|\A)!([A-Z]\w+)(\s|\B)').sub(r'\1\2\3', text)
+
     # Links
     def sub_link(m):
         s = "[%s](%s)" % (m.group(2), m.group(1))
